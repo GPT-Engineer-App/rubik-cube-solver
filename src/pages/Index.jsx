@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, GridItem, VStack, HStack, useToast } from "@chakra-ui/react";
+import { Box, Button, Grid, GridItem, VStack, HStack, useToast, Text } from "@chakra-ui/react";
 
 // A single face of the Rubik's cube
 const createFace = (initialColor) =>
@@ -19,6 +19,7 @@ const createCube = () => ({
 
 const Index = () => {
   const [cube, setCube] = useState(createCube());
+  const [lastRotatedFace, setLastRotatedFace] = useState(null);
   const toast = useToast();
 
   const rotateFace = (face) => {
@@ -27,6 +28,7 @@ const Index = () => {
     const rotated = matrix[0].map((_, index) => matrix.map((row) => row[index]).reverse());
     newCube[face] = rotated;
     setCube(newCube);
+    setLastRotatedFace(face);
   };
 
   // Render a single face of the cube
@@ -50,14 +52,17 @@ const Index = () => {
       <HStack spacing={8}>
         <Box>{renderFace("down")}</Box>
       </HStack>
-      <HStack spacing={8}>
-        <Button onClick={() => rotateFace("front")}>Rotate Front</Button>
-        <Button onClick={() => rotateFace("back")}>Rotate Back</Button>
-        <Button onClick={() => rotateFace("up")}>Rotate Up</Button>
-        <Button onClick={() => rotateFace("down")}>Rotate Down</Button>
-        <Button onClick={() => rotateFace("left")}>Rotate Left</Button>
-        <Button onClick={() => rotateFace("right")}>Rotate Right</Button>
-      </HStack>
+      <VStack spacing={4}>
+        <HStack spacing={8}>
+          <Button onClick={() => rotateFace("front")}>Rotate Front</Button>
+          <Button onClick={() => rotateFace("back")}>Rotate Back</Button>
+          <Button onClick={() => rotateFace("up")}>Rotate Up</Button>
+          <Button onClick={() => rotateFace("down")}>Rotate Down</Button>
+          <Button onClick={() => rotateFace("left")}>Rotate Left</Button>
+          <Button onClick={() => rotateFace("right")}>Rotate Right</Button>
+        </HStack>
+        {lastRotatedFace && <Text>Last rotated face: {lastRotatedFace}</Text>}
+      </VStack>
     </VStack>
   );
 };
