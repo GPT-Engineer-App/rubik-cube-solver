@@ -1,69 +1,24 @@
-import React, { useState } from "react";
-import { Box, Button, Grid, GridItem, VStack, HStack, useToast, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 
-// A single face of the Rubik's cube
-const createFace = (initialColor) =>
-  Array(3)
-    .fill()
-    .map(() => Array(3).fill(initialColor));
-
-// The Rubik's cube with 6 faces
-const createCube = () => ({
-  front: createFace("green"),
-  back: createFace("blue"),
-  up: createFace("yellow"),
-  down: createFace("white"),
-  left: createFace("orange"),
-  right: createFace("red"),
-});
+const createCube = () => {};
 
 const Index = () => {
   const [cube, setCube] = useState(createCube());
   const [lastRotatedFace, setLastRotatedFace] = useState(null);
-  const toast = useToast();
 
-  const rotateFace = (face) => {
-    const newCube = { ...cube };
-    const matrix = newCube[face];
-    const rotated = matrix[0].map((_, index) => matrix.map((row) => row[index]).reverse());
-    newCube[face] = rotated;
-    setCube(newCube);
-    setLastRotatedFace(face);
+  const resetCube = () => {
+    setCube(createCube());
+    setLastRotatedFace(null);
   };
 
-  // Render a single face of the cube
-  const renderFace = (faceKey) => (
-    <Grid templateColumns="repeat(3, 1fr)" gap={1}>
-      {cube[faceKey].map((row, rowIndex) => row.map((color, colIndex) => <GridItem key={`${faceKey}-${rowIndex}-${colIndex}`} w="40px" h="40px" bg={color} />))}
-    </Grid>
-  );
-
   return (
-    <VStack spacing={8}>
-      <HStack spacing={8}>
-        <Box>{renderFace("up")}</Box>
-      </HStack>
-      <HStack spacing={8}>
-        <Box>{renderFace("left")}</Box>
-        <Box>{renderFace("front")}</Box>
-        <Box>{renderFace("right")}</Box>
-        <Box>{renderFace("back")}</Box>
-      </HStack>
-      <HStack spacing={8}>
-        <Box>{renderFace("down")}</Box>
-      </HStack>
-      <VStack spacing={4}>
-        <HStack spacing={8}>
-          <Button onClick={() => rotateFace("front")}>Rotate Front</Button>
-          <Button onClick={() => rotateFace("back")}>Rotate Back</Button>
-          <Button onClick={() => rotateFace("up")}>Rotate Up</Button>
-          <Button onClick={() => rotateFace("down")}>Rotate Down</Button>
-          <Button onClick={() => rotateFace("left")}>Rotate Left</Button>
-          <Button onClick={() => rotateFace("right")}>Rotate Right</Button>
-        </HStack>
-        {lastRotatedFace && <Text>Last rotated face: {lastRotatedFace}</Text>}
-      </VStack>
-    </VStack>
+    <div>
+      {}
+      <Button colorScheme="blue" onClick={resetCube}>
+        Reset Cube
+      </Button>
+    </div>
   );
 };
 
