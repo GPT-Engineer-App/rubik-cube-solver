@@ -21,15 +21,12 @@ const Index = () => {
   const [cube, setCube] = useState(createCube());
   const toast = useToast();
 
-  // This function is a placeholder for the actual rotation logic
   const rotateFace = (face) => {
-    toast({
-      title: `Rotating ${face}`,
-      description: "This would rotate the face of the Rubik's cube",
-      status: "info",
-      duration: 2000,
-      isClosable: true,
-    });
+    const newCube = { ...cube };
+    const matrix = newCube[face];
+    const rotated = matrix[0].map((_, index) => matrix.map((row) => row[index]).reverse());
+    newCube[face] = rotated;
+    setCube(newCube);
   };
 
   // Render a single face of the cube
