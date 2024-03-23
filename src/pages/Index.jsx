@@ -35,7 +35,7 @@ const Index = () => {
   // Render a single face of the cube
   const renderFace = (faceKey) => (
     <Grid templateColumns="repeat(3, 1fr)" gap={1}>
-      {cube[faceKey].map((row, rowIndex) => row.map((color, colIndex) => <GridItem key={`${faceKey}-${rowIndex}-${colIndex}`} w="40px" h="40px" bg={color} background="gray.100" />))}
+      {cube[faceKey].map((row, rowIndex) => row.map((color, colIndex) => <GridItem key={`${faceKey}-${rowIndex}-${colIndex}`} w="40px" h="40px" bg={color} />))}
     </Grid>
   );
 
